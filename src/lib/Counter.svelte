@@ -1,35 +1,30 @@
 <script>
-	let count1 = 0;
-	let count2 = 0;
-	let count3 = 0;
+	export let initialCount;
+	export let maxCount;
 
-	function setCount3(x) {
-		count3 = x * 2;
-		return count3;
-	}
-	function getTotal(x, y) {
-		return x + y;
-	}
+	console.log($$props, $$restProps);
 
-	$: string1 = `You have clicked ${getTotal(count1, count2)} times`;
+	// $$props
+	// {
+	//   "maxCount": 10,
+	//   "initialCount": 3,
+	//   "restProps": "foo"
+	// }
 
-	// 변경 순서가 보장되어야 정상 동작한다.
-	$: setCount3(count1);
-	$: string3 = `Count3 is ${count3}`;
+	// $$restProps
+	// {
+	//   "restProps": "foo"
+	// }
 
-	function increment1() {
-		count1 += 1;
-	}
-	function increment2() {
-		count2 += 1;
+	let count = initialCount;
+
+	function increment() {
+		if (count >= maxCount) return;
+		count += 1;
 	}
 </script>
 
-<button on:click={increment1}>clicks {count1}</button>
-<button on:click={increment2}>clicks {count2}</button>
-
-<p>{string1}</p>
-<p>{string3}</p>
+<button on:click={increment}>clicks {count}</button>
 
 <style>
 	button {
