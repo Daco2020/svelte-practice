@@ -1,19 +1,35 @@
 <script>
-	let count = 0;
-	$: string = `You have clicked ${count} times`;
+	let count1 = 0;
+	let count2 = 0;
+	let count3 = 0;
 
-	$: if (count >= 10) {
-		alert(`count is dangerously high!`);
-		count = 9;
+	function setCount3(x) {
+		count3 = x * 2;
+		return count3;
+	}
+	function getTotal(x, y) {
+		return x + y;
 	}
 
-	function increment() {
-		count += 1;
+	$: string1 = `You have clicked ${getTotal(count1, count2)} times`;
+
+	// 변경 순서가 보장되어야 정상 동작한다.
+	$: setCount3(count1);
+	$: string3 = `Count3 is ${count3}`;
+
+	function increment1() {
+		count1 += 1;
+	}
+	function increment2() {
+		count2 += 1;
 	}
 </script>
 
-<button on:click={increment}>clicks {count}</button>
-<p>{string}</p>
+<button on:click={increment1}>clicks {count1}</button>
+<button on:click={increment2}>clicks {count2}</button>
+
+<p>{string1}</p>
+<p>{string3}</p>
 
 <style>
 	button {
